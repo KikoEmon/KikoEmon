@@ -1,12 +1,47 @@
-
 gg.setVisible(true)
 gg.alert("⚠️ WARNING ⚠️ \n \nPrivate Script WhooTao New Version!")
 gg.toast("WhooTao ch") 
 
+local n, startAddress, endAddress = nil, 0, 0
+local function name(lib)
+	if n == lib then
+		return startAddress, endAddress
+	end
+	local ranges = gg.getRangesList(lib or 'libil2cpp.so')
+	for i, v in ipairs(ranges) do
+		if v.state == "Xa" then
+			startAddress = v.start
+			endAddress = ranges[#ranges]['end']
+			break
+		end
+	end
+	return startAddress, endAddress
+end
+
+local function setHexMemory(libname, offset, hex)
+	name(libname)
+	local t, total = {}, 0
+	for h in string.gmatch(hex, "%S%S") do
+	    table.insert(t, {
+	        address = startAddress + offset + total,
+	        flags = gg.TYPE_BYTE,
+	        value = h .. "r"
+	    })
+	    total = total + 1
+	end
+	local res = gg.setValues(t)
+	if type(res) ~= 'string' then
+		return true
+	else
+		gg.alert(res)
+		return false
+	end
+end
+
 local targetName = [=====[Bounty]=====]
 local targetPkg = 'com.bandainamcoent.opbrww'
-local targetVersion = [=====['71010']=====]
-local targetBuild = 71010
+local targetVersion = [=====['72000']=====]
+local targetBuild = 72000
 local checkTarget = 3
 gg.alert("checking app..")
 gg.sleep(1500)
@@ -21,7 +56,7 @@ gg.sleep(2000)
 end
 
 local v = gg.getTargetInfo()
-if v.versionCode ~= 71010 then
+if v.versionCode ~= 72000 then
  print('⚠️ Your Bounty version is: ', v.versionCode, ' Please use the right one.')
 os.exit()
 end
@@ -37,9 +72,10 @@ menu = gg.choice({
 '➜ ❲Box❳ Must',
 '➜ ❲Disable Jump❳ Safe',
 '➜ ❲No CD❳ Safe',
+'➜ ❲Active Skill Jump❳ Safe',
 ------ SCRIPT BY SaikyoMaou ------
 '══✧══|| EXIT ||══✧══'},
-'ken','══════════✧══════════\n ⟮One Piece Bounty Rush Hack⟯\n══════════✧══════════  \n   ➥ Script by WhooTao ch.\n Date: '..d)
+'ken','══════════✧══════════\n ⟮One Piece Bounty Rush Hack⟯\n══════════✧══════════  \n   ➥ Script by WhooTao ch.\n User: @MemoKeTu\n Date: ', d)
 
 if menu == 1 then bpas() end
 if menu == 2 then longlite() end
@@ -49,15 +85,29 @@ if menu == 5 then multi() end
 if menu == 6 then box() end
 if menu == 7 then disablejump() end
 if menu == 8 then nocd() end
-if menu == 9 then keluartod() end
+if menu == 9 then skilljump() end
+if menu == 10 then keluartod() end
 KENN=-1
+end
+
+function skilljump()
+setHexMemory("libil2cpp.so",0x1345E3C,"C0 03 5F D6")
+gg.sleep(2)
+setHexMemory("libil2cpp.so",0x13F2DE4,"C0 03 5F D6")
+gg.sleep(2)
+setHexMemory("libil2cpp.so",0x14D73E8,"C0 03 5F D6")
+setHexMemory("libil2cpp.so",0x14D5F4C,"C0 03 5F D6")
+setHexMemory("libil2cpp.so",0x266785C,"C0 03 5F D6")
+gg.sleep(2)
+setHexMemory("libil2cpp.so",0x12F6CD0,"C0 03 5F D6")
+gg.toast("Always Active Skill Jump: ON")
 end
 
 function bpas()
 local bypassed = gg.multiChoice({
 "➜ Bypass Core [1]", 
 "➜ Bypass Core [2]",
-"➜ Bypass Core [3]",
+"➜ Block/Anti Report [3]",
 "× Back ×",
 }, nil, " Bypass Menu: (Aktifkan satu persatu agar tidak bug :D)")
 
@@ -69,57 +119,27 @@ end
 
 function bpas1()
 gg.setRanges(gg.REGION_CODE_APP)
-gg.searchNumber("-788,429,825;964,687,496", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-788,429,825",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(450)
-gg.searchNumber("960,535,552;956,341,256", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("960,535,552",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(450)
-gg.searchNumber("960,534,528;956,341,256", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("960,534,528",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
+setHexMemory("libil2cpp.so",0x139B554,"C0 03 5F D6")
+gg.sleep(2)
+setHexMemory("libil2cpp.so",0x139AE4C,"C0 03 5F D6")
+gg.sleep(2)
+setHexMemory("libil2cpp.so",0x139AE44,"C0 03 5F D6")
+gg.sleep(2)
+setHexMemory("libil2cpp.so",0x139AE38,"C0 03 5F D6")
+setHexMemory("libil2cpp.so",0x139AE30,"C0 03 5F D6")
 gg.toast("Protection [1] is Active :3")
 end
 
 function bpas2()
 gg.setRanges(gg.REGION_CODE_APP)
-gg.searchNumber("-113.230,848;963.600,008", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-113.230,848",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(450)
-gg.searchNumber("-133.723,135;963,600,008", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-133.723,135",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(450)
-gg.searchNumber("-113,155,072;961,249,280", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-113,155,072",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(450)
-gg.searchNumber("-1,861.541,880;961,249,280", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-1,861.541,880",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
+setHexMemory("libil2cpp.so",0x153B6D0,"00 00 80 D2 C0 03 5F D6")
+gg.sleep(2)
+setHexMemory("libil2cpp.so",0x153B6F0,"00 00 80 D2 C0 03 5F D6")
+gg.sleep(2)
+setHexMemory("libil2cpp.so",0x153FC7C,"00 00 80 D2 C0 03 5F D6")
+gg.sleep(2)
+setHexMemory("libil2cpp.so",0x162A13C,"00 00 80 D2 C0 03 5F D6")
+gg.sleep(2)
 gg.clearResults()
 gg.toast("Protection [2] is Active :3")
 end
@@ -127,167 +147,8 @@ end
 
 function bpas3()
 gg.setRanges(gg.REGION_CODE_APP)
-gg.searchNumber("956,309,160;-698,416,192;956,339,208:177", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-698,416,192",4)
-gg.getResults(50)
-gg.editAll("-721,215,457", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("956,341,256;-132,182,018:9", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-132,182,018",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("960,512,264;-132,182,018;960,512,256:121", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-132,182,018",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("905,970,432;-132,313,098;963,130,056:133", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-132,313,098",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("958,936,712;-1,447,068,685;960,545,384:81", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-1,447,068,685",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("-1,447,068,685;963,146,408:65", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-1,447,068,685",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("-1,447,144,459;963,132,008:13", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-1,447,144,459",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("-132,313,098;963,141,320:17", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-132,313,098",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("-1,440,807,967;963,142,312:29", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-1,440,807,967",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("-1,447,144,459;963,143,304:13", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-1,447,144,459",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("956,327,945;-132,313,098;963,138,216:29", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-132,313,098",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.toast("Protection [3] is Active :3")
-end
-
-
-function bpas4()
-gg.setRanges(gg.REGION_CODE_APP)
-gg.searchNumber("956,481,544;-132,182,018;1,031,799,776", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-132,182,018",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("957,965,000;-1,447,144,459;962,215,592 ", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-1,447,144,459",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("956,334,696;960,536,576;962,267,816;922,747,176;958,073,512", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("960,536,576",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("905,965,271;-132,247,564;963,658,376", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-132,247,564",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("-1,447,144,459;960,944,808", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-1,447,144,459",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("-132,182,018;963,247,816", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-132,182,018",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("-1,447,144,459;957,265,576;922,747,464", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-1,447,144,459",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("960,837,320;-1,447,068,685;922,747,368", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-1,447,068,685",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("960,837,320;-1,447,207,945;922,747,368", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-1,447,207,945",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("956,643,048;-132,313,098;960,767,592;922,747,272", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-132,313,098",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.searchNumber("956,642,984;-132,247,564;960,768,648", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-132,247,564",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
-gg.clearResults()
-gg.sleep(350)
-gg.alert("DONE FUCKING DETECTOR VALUE. CREDIT TO: @SaikyoMaou (WhooTao Ch)")
+gg.alert("Maintenance, Akan diumumkan jika sudah bisa digunakan")
+Main()
 end
 
 function nocd()
@@ -304,22 +165,14 @@ end
 
 function oncd()
 gg.setRanges(gg.REGION_CODE_APP)
-gg.searchNumber("-132,313,098;962,683,592:17", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-132,313,098",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
+setHexMemory("libil2cpp.so",0x14DDEB8,"00 00 80 D2 C0 03 5F D6")
 gg.clearResults()
 gg.toast("No CD is Active :3️")
 end
 
 function offcd()
 gg.setRanges(gg.REGION_CODE_APP)
-gg.searchNumber("-698416192;962,683,592", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-698416192",4)
-gg.getResults(50)
-gg.editAll("-132,313,098", gg.TYPE_DWORD)
+setHexMemory("libil2cpp.so",0x14DDEB8,"F6 0F 1D F8")
 gg.clearResults()
 gg.toast("No CD is Off :3️")
 end
@@ -336,11 +189,7 @@ end
 
 function speed()
 gg.setRanges(gg.REGION_CODE_APP)
-gg.searchNumber("-65,138,712;963,022,472", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-65,138,712",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
+setHexMemory("libil2cpp.so",0x15240B4,"C0 03 5F D6")
 gg.clearResults()
 gg.toast("Speed Hack is Active :3️")
 end
@@ -374,11 +223,8 @@ end
 
 function multi()
 gg.setRanges(gg.REGION_CODE_APP)
-gg.searchNumber("-788,397,057;-50,318,360;962,310,792", gg.TYPE_DWORD)
-gg.getResults(100)
-gg.refineNumber("-788,397,057",4)
-gg.getResults(100)
-gg.editAll("-698416192", gg.TYPE_DWORD)
+setHexMemory("libil2cpp.so",0x14A2D38,"C0 03 5F D6")
+setHexMemory("libil2cpp.so",0x134CE90,"C0 03 5F D6")
 gg.clearResults()
 gg.toast("MultiHit is Active️")
 end
@@ -396,11 +242,7 @@ end
 
 function disablejump()
 gg.setRanges(gg.REGION_CODE_APP)
-gg.searchNumber("-788,413,441;-50,324,502;505,421,832;704,709,621", gg.TYPE_DWORD)
-gg.getResults(50)
-gg.refineNumber("-788,413,441",4)
-gg.getResults(50)
-gg.editAll("-698416192", gg.TYPE_DWORD)
+setHexMemory("libil2cpp.so",0x1529520,"00 00 80 D2 C0 03 5F D6")
 gg.clearResults()
 gg.toast("Disable Jump is Active️")
 end
