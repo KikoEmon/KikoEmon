@@ -46,21 +46,6 @@ local checkTarget = 3
 gg.alert("checking app..")
 gg.sleep(500)
 
-local pkg = gg.getTargetInfo()
-if pkg.packageName ~= targetPkg then
-print("⚠️ Please select Bounty to Process, this process selected to: ", pkg)
-os.exit()
-else
-gg.toast("Checking Version... ")
-gg.sleep(2000)
-end
-
-local v = gg.getTargetInfo()
-if v.versionCode ~= 72000 then
- print('⚠️ Your Bounty version is: ', v.versionCode, ' Please use the right one.')
-os.exit()
-end
-
 function Main()
 local d = os.date()
 menu = gg.choice({
